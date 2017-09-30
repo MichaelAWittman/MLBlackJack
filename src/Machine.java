@@ -8,12 +8,12 @@ public class Machine {
 	int reward = 0;
 	int totEpisodes = 1000000;
 	int episodes = 0;
-	double epsilon = .7;
+	double epsilon = .9;
 	double[] Qs = new double[16];
 	int currentState = -1;
 	int nextState = -1;
 	double gamma = 0.9;
-	double alpha = 0.01;
+	double alpha = 0.001;
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
@@ -30,6 +30,7 @@ public class Machine {
 	
 	public Machine(double[] d){
 		Qs = d.clone();
+		epsilon = 0.1;
 	}
 	
 	/*
@@ -523,10 +524,10 @@ public class Machine {
 	public void saveReward(){
 		
 		if(first){
-			rewardString.append("Reward,Trials\n");
+			rewardString.append("Reward,Won Hand,Trials\n");
 			first = false;
 		}
-		rewardString.append(reward + "," + episodes + "\n");
+		rewardString.append(reward + "," + didWin + "," + episodes + "\n");
 	}
 	
 	public void writeReward() throws IOException{

@@ -249,7 +249,7 @@ public class BlackJack
 			//S.o("Dealer wins");
 			playing = false;
 
-			m.incReward(-10);
+			m.incReward(-5);
 			m.incEpisodes();
 			lose++;
 			m.saveReward();
@@ -279,7 +279,7 @@ public class BlackJack
 				{
 					//S.o("Dealer busted. You win");
 					
-					m.incReward(10);
+					m.incReward(5);
 					m.incEpisodes();
 					win++;
 					m.saveReward();
@@ -293,7 +293,7 @@ public class BlackJack
 						//S.o("\nYou Win");
 						
 						win++;
-						m.incReward(10);
+						m.incReward(5);
 						m.incEpisodes();
 						m.saveReward();
 					} 
@@ -310,7 +310,7 @@ public class BlackJack
 					
 					else
 					{
-						m.incReward(-10);
+						m.incReward(-5);
 						m.saveReward();
 						m.incEpisodes();
 						lose++;
