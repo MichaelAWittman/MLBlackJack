@@ -236,7 +236,7 @@ public class BlackJack
 			//S.o("Player Hit");
 			//player_hand.printhands();
 			
-			if(12 <= player_hand.total_sum() && player_hand.total_sum() <= 21)
+			if(17 <= player_hand.total_sum() && player_hand.total_sum() <= 21)
 			{
 				m.incReward(1);
 			}
@@ -264,7 +264,7 @@ public class BlackJack
 			if (!player_hand.busted())
 			{
 				
-				if(12 <= player_hand.total_sum())
+				if(17 <= player_hand.total_sum())
 				{
 					m.incReward(1);
 				}
