@@ -8,7 +8,7 @@ public class Machine {
 	int reward = 0;
 	int totEpisodes = 1000000;
 	int episodes = 0;
-	double epsilon = .9;
+	double epsilon = 0.2;
 	double[] Qs = new double[16];
 	int currentState = -1;
 	int nextState = -1;
