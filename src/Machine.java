@@ -133,20 +133,6 @@ public class Machine {
 		return state;
 	}
 	
-	public int getReward(int state)
-	{
-		int reward = 0;
-		
-		if(state == 6 || state == 8)
-		{
-			reward = -1;
-		}
-		else
-		{
-			reward = 0;
-		}
-		return reward;
-	}
 	
 	double max = 0;
 	public double getMaxQ(double[] Qs)
@@ -259,24 +245,17 @@ public class Machine {
 		
 		return index;
 	}
-	
-	//Map<Integer,Integer[]> map = new HashMap<Integer,Integer[]>();  
-	
-	int[] LB = {0,2,4};
-	int[] LN = {1,3,5};
-	int[] MB = {2,4,6,7};
-	int[] MN = {3,5,8,9};
-	int[] HB = {4,6,7};
-	int[] HN = {5,8,9};
-	
-	
+		
 	
 	private int getBestAction(int currentState, double[] Qs)
 	{
 		int action = 2;
+		double temp = 0;
+		int index = 0;
 	
 		if(currentState == 0)
-		{
+		{		
+			
 			if(Qs[0] > Qs[1])
 			{
 				action = 2;
@@ -291,12 +270,20 @@ public class Machine {
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
 				
+				if(action == 1)
+				{
+					max = Qs[1];
+				}
+				else if(action == 2)
+				{
+					max = Qs[0];
+				}
+				
 			}
-			
-			
 		}
 		else if(currentState == 1)
-		{
+		{		
+			
 			if(Qs[2] > Qs[3])
 			{
 				action = 2;
@@ -310,6 +297,16 @@ public class Machine {
 			else
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[3];
+				}
+				else if(action == 2)
+				{
+					max = Qs[2];
+				}
+				
 			}
 		}
 		else if(currentState == 2)
@@ -327,6 +324,15 @@ public class Machine {
 			else
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[5];
+				}
+				else if(action == 2)
+				{
+					max = Qs[4];
+				}
 			}
 		}
 		else if(currentState == 3)
@@ -344,6 +350,15 @@ public class Machine {
 			else
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[7];
+				}
+				else if(action == 2)
+				{
+					max = Qs[6];
+				}
 			}
 		}
 		else if(currentState == 4)
@@ -361,6 +376,16 @@ public class Machine {
 			else
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[9];
+				}
+				else if(action == 2)
+				{
+					max = Qs[8];
+				}
+				
 			}
 		}
 		else if(currentState == 5)
@@ -378,10 +403,21 @@ public class Machine {
 			else
 			{
 				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[11];
+				}
+				else if(action == 2)
+				{
+					max = Qs[10];
+				}
 			}
 		}
 		
 		return action;
+			
+		
 	}
 	
 	public boolean isStand() {
@@ -400,7 +436,6 @@ public class Machine {
 		 if(d <= epsilon)
 		 {
 			 action = (Math.random() <= 0.5) ? 1 : 2;
-			 //System.out.println(action);
 		 }
 		 else
 		 {
@@ -409,10 +444,10 @@ public class Machine {
 
 		 }
 			
-//			if(episodes % 2000 == 0)
-//			{
-//				epsilon = (epsilon - .007);
-//			}
+			if(episodes % 2000 == 0)
+			{
+				epsilon = (epsilon * .08);
+			}
 		
 		return action;
 	}

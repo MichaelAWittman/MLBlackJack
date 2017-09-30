@@ -235,10 +235,11 @@ public class BlackJack
 			player_hand.hit();
 			//S.o("Player Hit");
 			//player_hand.printhands();
-//			if(12 <= player_hand.total_sum() && player_hand.total_sum() <= 21)
-//			{
-//				nextStateReward = 1;
-//			}
+			
+			if(12 <= player_hand.total_sum() && player_hand.total_sum() <= 21)
+			{
+				m.incReward(1);
+			}
 			
 		}
 		if (player_hand.busted())
@@ -248,7 +249,7 @@ public class BlackJack
 			//S.o("Dealer wins");
 			playing = false;
 
-			m.incReward(-1);
+			m.incReward(-10);
 			m.incEpisodes();
 			lose++;
 			m.saveReward();
@@ -262,6 +263,12 @@ public class BlackJack
 		{
 			if (!player_hand.busted())
 			{
+				
+				if(12 <= player_hand.total_sum())
+				{
+					m.incReward(1);
+				}
+				
 				while (dealer_hand.total_sum() < 17)
 				{
 					dealer_hand.hit();
@@ -272,7 +279,7 @@ public class BlackJack
 				{
 					//S.o("Dealer busted. You win");
 					
-					m.incReward(1);
+					m.incReward(10);
 					m.incEpisodes();
 					win++;
 					m.saveReward();
@@ -286,7 +293,7 @@ public class BlackJack
 						//S.o("\nYou Win");
 						
 						win++;
-						m.incReward(1);
+						m.incReward(10);
 						m.incEpisodes();
 						m.saveReward();
 					} 
@@ -303,7 +310,7 @@ public class BlackJack
 					
 					else
 					{
-						m.incReward(-1);
+						m.incReward(-10);
 						m.saveReward();
 						m.incEpisodes();
 						lose++;
