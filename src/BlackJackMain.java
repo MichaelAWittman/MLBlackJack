@@ -58,6 +58,8 @@ public class BlackJackMain
 			
 			choice = m.willPlay();
 		}
+		
+		
 		S.o("\nThanks for playing! \n");
 		
 		S.o("Win: " + win);

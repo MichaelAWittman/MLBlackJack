@@ -8,12 +8,12 @@ public class Machine {
 	int reward = 0;
 	int totEpisodes = 1000000;
 	int episodes = 0;
-	double epsilon = .7;
-	double[] Qs = new double[16];
+	double epsilon = 1;
+	double[] Qs = new double[20];
 	int currentState = -1;
 	int nextState = -1;
-	double gamma = 0.9;
-	double alpha = 0.01;
+	double gamma = .9;
+	double alpha = 0.001;
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
@@ -32,7 +32,9 @@ public class Machine {
 	 * 
 	 * Medium state: 8 to 11
 	 * 
-	 * high state: >= 12
+	 * Player Bust state 12 to 16
+	 * 
+	 * high state: 17 to 21
 	 * 
 	 * Bust Card state: 12 to 16 (dealer only)
 	 * 
@@ -54,6 +56,7 @@ public class Machine {
 		
 		boolean low = false;
 		boolean medium = false;
+		boolean playerBust = false;
 		boolean high = false;
 		
 		boolean bustCard = false;
@@ -69,7 +72,11 @@ public class Machine {
 			{
 				medium = true;
 			}
-			else if(12 <= playerHand && playerHand <= 21)
+			else if(12 <= playerHand && playerHand <= 16)
+			{
+				playerBust = true;
+			}
+			else if(17 <= playerHand && playerHand <= 21)
 			{
 				high = true;
 			}
@@ -104,29 +111,37 @@ public class Machine {
 			{
 				state = 3;
 			}
-			else if(high && bustCard)
+			else if(playerBust && bustCard)
 			{
 				state = 4;
 			}
-			else if(high && notBustCard)
+			else if(playerBust && notBustCard)
 			{
 				state = 5;
 			}
-			else if(busted && bustCard)
+			else if(high && bustCard)
 			{
 				state = 6;
 			}
-			else if(busted && notBustCard)
+			else if(high && notBustCard)
 			{
 				state = 7;
 			}
-			else if(isStand && notBustCard)
+			else if(busted && bustCard)
 			{
 				state = 8;
 			}
-			else if(isStand && notBustCard)
+			else if(busted && notBustCard)
 			{
 				state = 9;
+			}
+			else if(isStand && notBustCard)
+			{
+				state = 10;
+			}
+			else if(isStand && notBustCard)
+			{
+				state = 11;
 			}
 			
 		
@@ -226,22 +241,7 @@ public class Machine {
 		{
 			index = 15;
 		}
-		else if(state == 8 && action == 2)
-		{
-			index = 1;
-		}
-		else if(state == 8 && action == 1)
-		{
-			index = 1;
-		}
-		else if(state == 9 && action == 2)
-		{
-			index = 1;
-		}
-		else if(state == 9 && action == 1)
-		{
-			index = 1;
-		}
+		//Do not need to do state 8 to 11 since no action will be taken
 		
 		return index;
 	}
@@ -414,6 +414,58 @@ public class Machine {
 				}
 			}
 		}
+		else if(currentState == 6)
+		{
+			if(Qs[12] > Qs[13])
+			{
+				action = 2;
+				max = Qs[12];
+			}
+			else if(Qs[13] > Qs[12])
+			{
+				action = 1;
+				max = Qs[13];
+			}
+			else
+			{
+				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[13];
+				}
+				else if(action == 2)
+				{
+					max = Qs[12];
+				}
+			}
+		}
+		else if(currentState == 7)
+		{
+			if(Qs[14] > Qs[15])
+			{
+				action = 2;
+				max = Qs[14];
+			}
+			else if(Qs[15] > Qs[14])
+			{
+				action = 1;
+				max = Qs[15];
+			}
+			else
+			{
+				action = (Math.random() <= 0.5) ? 1 : 2;
+				
+				if(action == 1)
+				{
+					max = Qs[15];
+				}
+				else if(action == 2)
+				{
+					max = Qs[14];
+				}
+			}
+		}
 		
 		return action;
 			
@@ -446,7 +498,7 @@ public class Machine {
 			
 			if(episodes % 2000 == 0)
 			{
-				epsilon = (epsilon * .08);
+				epsilon = (epsilon * .29);
 			}
 		
 		return action;
