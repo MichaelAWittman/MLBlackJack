@@ -8,6 +8,9 @@ import java.io.IOException;
 public class BlackJackMain
 {
 	static Machine m = new Machine();
+	static int win;
+	static int lose;
+	static int draw;
 	static BlackJack blackJack;
 
 	public static void play_blackjack()
@@ -41,15 +44,28 @@ public class BlackJackMain
 
 		//S.o("Do u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
 		String choice = m.willPlay();
+		
 		while (choice.equalsIgnoreCase("Y"))
 		{
 			blackJack = new BlackJack(m);
 			blackJack.start();
 			play_blackjack();
 			//S.o("\n\nDo u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
+			
+			win+=blackJack.getWin();
+			lose+=blackJack.getLose();
+			draw+=blackJack.getDraw();
+			
 			choice = m.willPlay();
 		}
 		S.o("\nThanks for playing! \n");
+		
+		S.o("Win: " + win);
+		S.o("Lose: " + lose);
+		S.o("Draw: " + draw);
+		
+		S.o("\n");
+		m.printQs();
 		try {
 			m.writeReward();
 		} catch (IOException e) {

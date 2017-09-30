@@ -1,20 +1,19 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
 
 		
 public class Machine {
 	boolean first = true;
 	StringBuilder rewardString = new StringBuilder();
 	int reward = 0;
-	int totEpisodes = 999999;
+	int totEpisodes = 1000000;
 	int episodes = 0;
 	double epsilon = .7;
-	double[] Qs = new double[14];
+	double[] Qs = new double[16];
 	int currentState = -1;
 	int nextState = -1;
 	double gamma = 0.9;
-	double alpha = 0.001;
+	double alpha = 0.01;
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
@@ -394,7 +393,6 @@ public class Machine {
 	}
 
 	public int getChoice(){
-		//TODO: Implement Algorithm. Return '1' for hit and '2' for stand
 		
 		 double d = Math.random();
 		 int action = 0; 
@@ -446,6 +444,14 @@ public class Machine {
 		nextStateReward = 0;
 	}
 
+	public void printQs(){
+		int count = 0;
+		for(double d : Qs){
+			S.o("State: " + count + " Q(s,a) = " + d);
+			++count;
+		}
+	}
+	
 	public String willPlay(){
 		if(totEpisodes - episodes > 0){
 			return "Y";

@@ -66,7 +66,7 @@ class Deck
 			}
 		}
 		shuffle(this.deck);
-		// printDeck();
+		//printDeck();
 	}
 
 	private void printDeck()
@@ -222,6 +222,7 @@ public class BlackJack
 	private Hand player_hand, dealer_hand;
 	public static Boolean playing, shown, busted;
 	Machine m;
+	int win=0, lose=0, draw=0;
 
 	public BlackJack(Machine m){
 		this.m = m;
@@ -248,6 +249,7 @@ public class BlackJack
 			playing = false;
 
 			m.incReward(-1);
+			lose++;
 			m.saveReward();
 		}
 	}
@@ -270,6 +272,7 @@ public class BlackJack
 					//S.o("Dealer busted. You win");
 					
 					m.incReward(1);
+					win++;
 					m.saveReward();
 				} 
 				
@@ -280,6 +283,7 @@ public class BlackJack
 					{
 						//S.o("\nYou Win");
 						
+						win++;
 						m.incReward(1);
 						m.saveReward();
 					} 
@@ -288,6 +292,7 @@ public class BlackJack
 					{
 						//S.o("\nDraw (PUSH)!!!");
 						
+						draw++;
 						m.incReward(0);
 						m.saveReward();
 					}
@@ -296,13 +301,37 @@ public class BlackJack
 					{
 						m.incReward(-1);
 						m.saveReward();
-						
+						lose++;
 						//S.o("\nDealer Wins");
 					}
 				}
 				playing = false;
 			}
 		}
+	}
+
+	public int getWin() {
+		return win;
+	}
+
+	public void setWin(int win) {
+		this.win = win;
+	}
+
+	public int getLose() {
+		return lose;
+	}
+
+	public void setLose(int lose) {
+		this.lose = lose;
+	}
+
+	public int getDraw() {
+		return draw;
+	}
+
+	public void setDraw(int draw) {
+		this.draw = draw;
 	}
 
 	public void start()
