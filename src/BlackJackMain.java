@@ -52,12 +52,27 @@ public class BlackJackMain
 			play_blackjack();
 			//S.o("\n\nDo u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
 			
+//			win+=blackJack.getWin();
+//			lose+=blackJack.getLose();
+//			draw+=blackJack.getDraw();
+			
+			choice = m.willPlay();
+		}
+		Machine n = new Machine(m.getQs());
+		while (choice.equalsIgnoreCase("Y"))
+		{
+			blackJack = new BlackJack(n);
+			blackJack.start();
+			play_blackjack();
+			//S.o("\n\nDo u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
+			
 			win+=blackJack.getWin();
 			lose+=blackJack.getLose();
 			draw+=blackJack.getDraw();
 			
-			choice = m.willPlay();
+			choice = n.willPlay();
 		}
+		
 		S.o("\nThanks for playing! \n");
 		
 		S.o("Win: " + win);

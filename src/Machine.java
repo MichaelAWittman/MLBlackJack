@@ -17,6 +17,7 @@ public class Machine {
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
+	int didWin = 0;
 
 	
 	public Machine(){
@@ -25,6 +26,10 @@ public class Machine {
 		{
 			d = 0;
 		}
+	}
+	
+	public Machine(double[] d){
+		Qs = d.clone();
 	}
 	
 	/*
@@ -40,6 +45,14 @@ public class Machine {
 	 * 
 	 */
 	
+	public double[] getQs() {
+		return Qs;
+	}
+
+	public void setQs(double[] qs) {
+		Qs = qs;
+	}
+
 	public int getCurrentState() {
 		return currentState;
 	}
@@ -498,6 +511,9 @@ public class Machine {
 	public void incReward(int i){
 		reward = reward + (i);
 		nextStateReward = i;
+		if(i>0) didWin = 1;
+		else if(i<0) didWin = -1;
+		else didWin = 0;
 	}
 	
 	public void incEpisodes(){
