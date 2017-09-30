@@ -463,7 +463,10 @@ public class Machine {
 	public void incReward(int i){
 		reward = reward + (i);
 		nextStateReward = i;
-		episodes++;;
+	}
+	
+	public void incEpisodes(){
+		episodes++;
 	}
 	
 	public void saveReward(){
