@@ -17,6 +17,7 @@ public class Machine {
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
+	int didWin = 0;
 
 	
 	public Machine(){
@@ -25,6 +26,11 @@ public class Machine {
 		{
 			d = 0;
 		}
+	}
+	
+	public Machine(double[] d){
+		Qs = d.clone();
+		epsilon = 0.1;
 	}
 	
 	/*
@@ -42,6 +48,14 @@ public class Machine {
 	 * 
 	 */
 	
+	public double[] getQs() {
+		return Qs;
+	}
+
+	public void setQs(double[] qs) {
+		Qs = qs;
+	}
+
 	public int getCurrentState() {
 		return currentState;
 	}
@@ -550,6 +564,9 @@ public class Machine {
 	public void incReward(int i){
 		reward = reward + (i);
 		nextStateReward = i;
+		if(i>0) didWin = 1;
+		else if(i<0) didWin = -1;
+		else didWin = 0;
 	}
 	
 	public void incEpisodes(){
@@ -559,10 +576,10 @@ public class Machine {
 	public void saveReward(){
 		
 		if(first){
-			rewardString.append("Reward,Trials\n");
+			rewardString.append("Reward,Won Hand,Trials\n");
 			first = false;
 		}
-		rewardString.append(reward + "," + episodes + "\n");
+		rewardString.append(reward + "," + didWin + "," + episodes + "\n");
 	}
 	
 	public void writeReward() throws IOException{

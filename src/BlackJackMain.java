@@ -52,13 +52,27 @@ public class BlackJackMain
 			play_blackjack();
 			//S.o("\n\nDo u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
 			
+//			win+=blackJack.getWin();
+//			lose+=blackJack.getLose();
+//			draw+=blackJack.getDraw();
+			
+			choice = m.willPlay();
+		}
+		Machine n = new Machine(m.getQs());
+		choice = n.willPlay();
+		while (choice.equalsIgnoreCase("Y"))
+		{
+			blackJack = new BlackJack(n);
+			blackJack.start();
+			play_blackjack();
+			//S.o("\n\nDo u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
+			
 			win+=blackJack.getWin();
 			lose+=blackJack.getLose();
 			draw+=blackJack.getDraw();
 			
-			choice = m.willPlay();
+			choice = n.willPlay();
 		}
-		
 		
 		S.o("\nThanks for playing! \n");
 		
@@ -66,8 +80,10 @@ public class BlackJackMain
 		S.o("Lose: " + lose);
 		S.o("Draw: " + draw);
 		
-		S.o("\n");
+		S.o("\nOld Q values:");
 		m.printQs();
+		S.o("\nNew Q values:");
+		n.printQs();
 		try {
 			m.writeReward();
 		} catch (IOException e) {
