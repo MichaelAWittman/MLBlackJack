@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Scanner;
 //import java.util.ArrayList;
 //import java.util.Date;
 //import java.util.Scanner;
@@ -23,7 +24,7 @@ public class BlackJackMain
 
 	public static void main(String[] args)
 	{
-//		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		blackJack = new BlackJack(m);
 		blackJack.init();
 		
@@ -42,10 +43,11 @@ public class BlackJackMain
 //		S.o("\nPlayer2:\n");
 //		players.get(1).hand.printhands();
 
-		//S.o("Do u want to play BlackJack.\nEnter:\nYes: Y\nNo: N");
-		String choice = m.willPlay();
+		S.o("Please select a learning algorithm:\n1. Q-Learning\n2. SARSA");
+		int choice = scanner.nextInt();
+		if(choice == 1) m.setQLearning(true);
 		
-		while (choice.equalsIgnoreCase("Y"))
+		while (m.willPlay().equalsIgnoreCase("Y"))
 		{
 			blackJack = new BlackJack(m);
 			blackJack.start();
@@ -55,12 +57,10 @@ public class BlackJackMain
 //			win+=blackJack.getWin();
 //			lose+=blackJack.getLose();
 //			draw+=blackJack.getDraw();
-			
-			choice = m.willPlay();
 		}
 		Machine n = new Machine(m.getQs());
-		choice = n.willPlay();
-		while (choice.equalsIgnoreCase("Y"))
+		n.setQLearning(m.isQLearning());
+		while (n.willPlay().equalsIgnoreCase("Y"))
 		{
 			blackJack = new BlackJack(n);
 			blackJack.start();
@@ -70,8 +70,6 @@ public class BlackJackMain
 			win+=blackJack.getWin();
 			lose+=blackJack.getLose();
 			draw+=blackJack.getDraw();
-			
-			choice = n.willPlay();
 		}
 		
 		S.o("\nThanks for playing! \n");

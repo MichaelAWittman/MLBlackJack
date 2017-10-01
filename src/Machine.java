@@ -6,20 +6,32 @@ public class Machine {
 	boolean first = true;
 	StringBuilder rewardString = new StringBuilder();
 	int reward = 0;
-	int totEpisodes = 1000000;
+	int totEpisodes = 100000;
 	int episodes = 0;
 	double epsilon = 0.2;
 	double[] Qs = new double[20];
 	int currentState = -1;
 	int nextState = -1;
+	int sarsaState = -1;
 	double gamma = .9;
 	double alpha = 0.001;
 	boolean isStand = false;
 	int qIndex = 0;
+	int sarsaIndex = 0;
 	int nextStateReward = 0;
+	int sarsaStateReward = 0;
 	int didWin = 0;
+	boolean isQLearning = false;
 
 	
+	public boolean isQLearning() {
+		return isQLearning;
+	}
+
+	public void setQLearning(boolean isQLearning) {
+		this.isQLearning = isQLearning;
+	}
+
 	public Machine(){
 		//Initialize each Vs to 0;
 		for(double d : Qs)
@@ -187,6 +199,22 @@ public class Machine {
 		return index;
 	}
 	
+	public int getSarsaState() {
+		return sarsaState;
+	}
+
+	public void setSarsaState(int sarsaState) {
+		this.sarsaState = sarsaState;
+	}
+
+	public int getSarsaIndex() {
+		return sarsaIndex;
+	}
+
+	public void setSarsaIndex(int sarsaIndex) {
+		this.sarsaIndex = sarsaIndex;
+	}
+
 	public int getStateActionPairIndex(int state, int action)
 	{
 		int index = 0;
@@ -534,6 +562,10 @@ public class Machine {
 		this.qIndex = qIndex;
 	}
 	
+//	def learn(self, state1, action1, reward, state2):
+//	    maxqnew = max([self.getQ(state2, a) for a in self.actions])
+//	    self.learnQ(state1, action1,
+//	                reward, reward + self.gamma*maxqnew)
 	public void qAlgo(){
 		double maxQ = getMaxQ(Qs);
 		
@@ -545,6 +577,17 @@ public class Machine {
 		nextStateReward = 0;
 	}
 
+//	def learn(self, state1, action1, reward, state2, action2):
+//	    qnext = self.getQ(state2, action2)
+//	    self.learnQ(state1, action1,
+//	                reward, reward + self.gamma * qnext)
+	public void sarsaAlgo(){
+		Qs[sarsaIndex] = Qs[sarsaIndex] + (alpha * (nextStateReward + (gamma * Qs[qIndex]) - Qs[sarsaIndex]));
+		sarsaState = currentState;
+		currentState = nextState;
+		nextStateReward = 0;
+	}
+	
 	public void printQs(){
 		int count = 0;
 		for(double d : Qs){
