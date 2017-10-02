@@ -58,6 +58,7 @@ public class BlackJackMain
 			
 			choice = m.willPlay();
 		}
+		
 		Machine n = new Machine(m.getQs());
 		choice = n.willPlay();
 		while (choice.equalsIgnoreCase("Y"))

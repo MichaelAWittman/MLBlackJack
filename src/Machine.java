@@ -12,8 +12,8 @@ public class Machine {
 	double[] Qs = new double[20];
 	int currentState = -1;
 	int nextState = -1;
-	double gamma = .9;
-	double alpha = 0.001;
+	double gamma = .96;
+	double alpha = 0.0011;
 	boolean isStand = false;
 	int qIndex = 0;
 	int nextStateReward = 0;
@@ -30,7 +30,9 @@ public class Machine {
 	
 	public Machine(double[] d){
 		Qs = d.clone();
-		epsilon = 0.1;
+		epsilon = 0.05;
+		totEpisodes = 1000000;
+		
 	}
 	
 	/*
@@ -510,9 +512,9 @@ public class Machine {
 
 		 }
 			
-			if(episodes % 2000 == 0)
+			if(episodes % 400 == 0)
 			{
-				epsilon = (epsilon * .29);
+				epsilon = (epsilon * .94);
 			}
 		
 		return action;
