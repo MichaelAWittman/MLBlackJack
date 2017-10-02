@@ -378,12 +378,14 @@ public class BlackJack
 		while (playing)
 		{
 			//get current state
+			m.setSarsaState(m.getCurrentState());
 			m.setCurrentState(m.getState(dealer_hand.getFlippedCard(), player_hand.total_sum()));
 			
 			//choose an action
 			choice = m.getChoice();
-			
+			m.setSarsaIndex(m.getqIndex());
 			m.setqIndex(m.getStateActionPairIndex(m.getCurrentState(), choice));
+
 			
 			//perform that action
 			//also sets the reward for state
@@ -399,10 +401,18 @@ public class BlackJack
 				break;
 			}
 			
+			if(!m.isQLearning()){
+				m.sarsaAlgo();
+			}
+			
 			//get the next state
 			m.setNextState(m.getState(dealer_hand.getFlippedCard(), player_hand.total_sum()));
 			
-			m.qAlgo();
+			if(m.isQLearning())
+				m.qAlgo();
+			else
+				if(m.getSarsaState() != -1)
+				m.sarsaAlgo();
 			
 		}
 	}
