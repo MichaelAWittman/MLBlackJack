@@ -8,12 +8,12 @@ public class Machine {
 	int reward = 0;
 	int totEpisodes = 100000;
 	int episodes = 0;
-	double epsilon = 0.2;
+	double epsilon = .9; //.6 for sarsa
 	double[] Qs = new double[20];
 	int currentState = -1;
 	int nextState = -1;
 	double gamma = .9;
-	double alpha = 0.001;
+	double alpha = 0.0015; //.01 for sarsa
 	int sarsaState = -1;
 	boolean isStand = false;
 	int qIndex = 0;
@@ -538,9 +538,9 @@ public class Machine {
 
 		 }
 			
-			if(episodes % 2000 == 0)
+			if(episodes % 375 == 0)
 			{
-				epsilon = (epsilon * .29);
+				epsilon = (epsilon * .9); //.29 sarsa
 			}
 		
 		return action;
