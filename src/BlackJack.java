@@ -311,8 +311,8 @@ public class BlackJack
 					else
 					{
 						m.incReward(-5);
-						m.saveReward();
 						m.incEpisodes();
+						m.saveReward();
 						lose++;
 						//S.o("\nDealer Wins");
 					}

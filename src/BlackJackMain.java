@@ -58,6 +58,11 @@ public class BlackJackMain
 //			lose+=blackJack.getLose();
 //			draw+=blackJack.getDraw();
 		}
+		try {
+			m.writeReward("originaldata.csv");
+		} catch (IOException e) {
+			S.o("Your data could not be recorded.");
+		}
 		Machine n = new Machine(m.getQs());
 		n.setQLearning(m.isQLearning());
 		while (n.willPlay().equalsIgnoreCase("Y"))
@@ -83,7 +88,7 @@ public class BlackJackMain
 		S.o("\nNew Q values:");
 		n.printQs();
 		try {
-			m.writeReward();
+			n.writeReward("newdata.csv");
 		} catch (IOException e) {
 			S.o("Your data could not be recorded.");
 		}

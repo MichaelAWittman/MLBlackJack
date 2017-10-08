@@ -3,25 +3,25 @@ import java.io.IOException;
 
 		
 public class Machine {
-	boolean first = true;
-	StringBuilder rewardString = new StringBuilder();
-	int reward = 0;
-	int totEpisodes = 100000;
-	int episodes = 0;
-	double epsilon = 0.2;
-	double[] Qs = new double[20];
-	int currentState = -1;
-	int nextState = -1;
-	int sarsaState = -1;
-	double gamma = .9;
-	double alpha = 0.001;
-	boolean isStand = false;
-	int qIndex = 0;
-	int sarsaIndex = 0;
-	int nextStateReward = 0;
-	int sarsaStateReward = 0;
-	int didWin = 0;
-	boolean isQLearning = false;
+	private boolean first = true;
+	private StringBuilder rewardString = new StringBuilder();
+	private int reward = 0;
+	private int totEpisodes = 100000;
+	private int episodes = 0;
+	private double epsilon = 0.6;
+	private double[] Qs = new double[20];
+	private int currentState = -1;
+	private int nextState = -1;
+	private int sarsaState = -1;
+	private double gamma = .9;
+	private double alpha = 0.01;
+	private boolean isStand = false;
+	private int qIndex = 0;
+	private int sarsaIndex = 0;
+	private int nextStateReward = 0;
+	private int sarsaStateReward = 0;
+	private int didWin = 0;
+	private boolean isQLearning = false;
 
 	
 	public boolean isQLearning() {
@@ -561,11 +561,7 @@ public class Machine {
 	public void setqIndex(int qIndex) {
 		this.qIndex = qIndex;
 	}
-	
-//	def learn(self, state1, action1, reward, state2):
-//	    maxqnew = max([self.getQ(state2, a) for a in self.actions])
-//	    self.learnQ(state1, action1,
-//	                reward, reward + self.gamma*maxqnew)
+
 	public void qAlgo(){
 		double maxQ = getMaxQ(Qs);
 		
@@ -577,10 +573,6 @@ public class Machine {
 		nextStateReward = 0;
 	}
 
-//	def learn(self, state1, action1, reward, state2, action2):
-//	    qnext = self.getQ(state2, action2)
-//	    self.learnQ(state1, action1,
-//	                reward, reward + self.gamma * qnext)
 	public void sarsaAlgo(){
 		Qs[sarsaIndex] = Qs[sarsaIndex] + (alpha * (nextStateReward + (gamma * Qs[qIndex]) - Qs[sarsaIndex]));
 		sarsaState = currentState;
@@ -607,9 +599,9 @@ public class Machine {
 	public void incReward(int i){
 		reward = reward + (i);
 		nextStateReward = i;
-		if(i>0) didWin = 1;
-		else if(i<0) didWin = -1;
-		else didWin = 0;
+		if(i>2) didWin += 1;
+		else if(i<0) didWin += 0;
+		else didWin += 0;
 	}
 	
 	public void incEpisodes(){
@@ -619,14 +611,15 @@ public class Machine {
 	public void saveReward(){
 		
 		if(first){
-			rewardString.append("Reward,Won Hand,Trials\n");
+			rewardString.append("Won Hand,Trials,Reward\n");
 			first = false;
 		}
-		rewardString.append(reward + "," + didWin + "," + episodes + "\n");
+		if(episodes%10==0)
+		rewardString.append(didWin + "," + episodes + "," + reward + "\n");
 	}
 	
-	public void writeReward() throws IOException{
-		FileWriter w = new FileWriter("data.csv");
+	public void writeReward(String s) throws IOException{
+		FileWriter w = new FileWriter(s);
 		
 		w.append(rewardString);
 		w.flush();
