@@ -3,6 +3,7 @@ import java.io.IOException;
 
 		
 public class Machine {
+<<<<<<< HEAD
 	private boolean first = true;
 	private StringBuilder rewardString = new StringBuilder();
 	private int reward = 0;
@@ -22,6 +23,27 @@ public class Machine {
 	private int sarsaStateReward = 0;
 	private int didWin = 0;
 	private boolean isQLearning = false;
+=======
+	boolean first = true;
+	StringBuilder rewardString = new StringBuilder();
+	int reward = 0;
+	int totEpisodes = 100000;
+	int episodes = 0;
+	double epsilon = .9; //.6 for sarsa
+	double[] Qs = new double[20];
+	int currentState = -1;
+	int nextState = -1;
+	double gamma = .9;
+	double alpha = 0.0015; //.01 for sarsa
+	int sarsaState = -1;
+	boolean isStand = false;
+	int qIndex = 0;
+	int sarsaIndex = 0;
+	int nextStateReward = 0;
+	int sarsaStateReward = 0;
+	int didWin = 0;
+	boolean isQLearning = false;
+>>>>>>> ec7dc94c1502162eadd831c9f0594208ac6ca405
 
 	
 	public boolean isQLearning() {
@@ -538,9 +560,9 @@ public class Machine {
 
 		 }
 			
-			if(episodes % 2000 == 0)
+			if(episodes % 375 == 0)
 			{
-				epsilon = (epsilon * .29);
+				epsilon = (epsilon * .9); //.29 sarsa
 			}
 		
 		return action;
@@ -561,7 +583,11 @@ public class Machine {
 	public void setqIndex(int qIndex) {
 		this.qIndex = qIndex;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> ec7dc94c1502162eadd831c9f0594208ac6ca405
 	public void qAlgo(){
 		double maxQ = getMaxQ(Qs);
 		
