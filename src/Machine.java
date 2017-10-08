@@ -3,7 +3,6 @@ import java.io.IOException;
 
 		
 public class Machine {
-<<<<<<< HEAD
 	private boolean first = true;
 	private StringBuilder rewardString = new StringBuilder();
 	private int reward = 0;
@@ -23,7 +22,6 @@ public class Machine {
 	private int sarsaStateReward = 0;
 	private int didWin = 0;
 	private boolean isQLearning = false;
-=======
 	boolean first = true;
 	StringBuilder rewardString = new StringBuilder();
 	int reward = 0;
@@ -43,7 +41,6 @@ public class Machine {
 	int sarsaStateReward = 0;
 	int didWin = 0;
 	boolean isQLearning = false;
->>>>>>> ec7dc94c1502162eadd831c9f0594208ac6ca405
 
 	
 	public boolean isQLearning() {
@@ -583,11 +580,7 @@ public class Machine {
 	public void setqIndex(int qIndex) {
 		this.qIndex = qIndex;
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> ec7dc94c1502162eadd831c9f0594208ac6ca405
 	public void qAlgo(){
 		double maxQ = getMaxQ(Qs);
 		

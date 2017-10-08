@@ -310,12 +310,9 @@ public class BlackJack
 					
 					else
 					{
-<<<<<<< HEAD
 						m.incReward(-5);
-=======
 						m.incReward(-10);
 						m.saveReward();
->>>>>>> ec7dc94c1502162eadd831c9f0594208ac6ca405
 						m.incEpisodes();
 						m.saveReward();
 						lose++;
